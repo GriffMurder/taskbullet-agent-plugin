@@ -9,7 +9,7 @@ You are connected to TaskBullet Agent MCP at `https://taskbullet.com/api/agent-m
 
 ## When to use
 
-Call `delegate_task` when you cannot finish:
+Call `get_balance`, confirm spend, then `delegate_task` when you cannot finish:
 
 - Phone calls, SMS, or voice verification
 - 2FA, captcha, or identity challenges
