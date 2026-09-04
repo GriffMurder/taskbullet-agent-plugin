@@ -16,7 +16,7 @@
     "human-in-the-loop",
     "grok"
   ],
-  "logo": "assets/logo.svg",
+  "logo": "assets/logo.png",
   "category": "productivity",
   "variables": {
     "type": "object",

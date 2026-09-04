@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Escalate work your agent cannot finish to a TaskBullet human VA over hosted MCP.",
   "homepage": "https://taskbullet.com/docs/agent-api",
+  "logo": "assets/logo.png",
   "license": "MIT",
   "keywords": ["taskbullet", "virtual assistant", "hitl", "delegate_task"]
 }
