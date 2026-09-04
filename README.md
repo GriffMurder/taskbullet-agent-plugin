@@ -12,11 +12,12 @@ It does **not** use `npx @taskbullet/mcp-server` (that is laptop-only stdio). Cl
 
 | Tool | Purpose |
 | --- | --- |
-| `delegate_task` | Queue a VA task (title, description, priority, optional webhookUrl) |
-| `list_tasks` | Recent delegated tasks |
+| `get_balance` | Remaining hours and whether `delegate_task` will be accepted. Call this first. |
+| `delegate_task` | Queue a VA task (title, description, priority, dueDate, sourceAgent, optional webhookUrl) |
+| `list_tasks` | Recent delegated tasks (title + short result) |
 | `get_task` | Status + result for a `taskId` |
 
-Plus skill **escalate-to-va**: when the model hits phone / 2FA / captcha / physical-world / subjective QA / long manual work, call `delegate_task`. Never invent VA results.
+Plus skill **escalate-to-va**: call `get_balance` first, confirm spend, then `delegate_task` for phone / 2FA / captcha / physical-world / subjective QA / long manual work. Never invent VA results.
 
 ## Install (until the marketplace lists it)
 

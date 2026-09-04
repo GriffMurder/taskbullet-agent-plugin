@@ -1,7 +1,7 @@
 {
   "name": "taskbullet-agent",
-  "version": "1.0.0",
-  "description": "Escalate work your agent cannot finish to a TaskBullet human VA over hosted MCP (delegate_task, list_tasks, get_task).",
+  "version": "1.0.1",
+  "description": "Escalate work your agent cannot finish to a TaskBullet human VA over hosted MCP (get_balance, delegate_task, list_tasks, get_task).",
   "author": {
     "name": "TaskBullet"
   },

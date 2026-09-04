@@ -1,9 +1,20 @@
 {
   "name": "taskbullet-agent",
-  "version": "1.0.0",
-  "description": "Escalate work your agent cannot finish to a TaskBullet human VA over hosted MCP.",
+  "version": "1.0.1",
+  "description": "Escalate work your agent cannot finish to a TaskBullet human VA over hosted MCP (get_balance, delegate_task, list_tasks, get_task).",
   "homepage": "https://taskbullet.com/docs/agent-api",
   "logo": "assets/logo.png",
   "license": "MIT",
-  "keywords": ["taskbullet", "virtual assistant", "hitl", "delegate_task"]
+  "keywords": ["taskbullet", "virtual assistant", "hitl", "delegate_task", "get_balance"],
+  "variables": {
+    "type": "object",
+    "properties": {
+      "TASKBULLET_API_KEY": {
+        "type": "string",
+        "title": "TaskBullet API key",
+        "description": "tb_live_ key from https://taskbullet.com/dashboard/settings/api-keys. Sent as x-api-key to https://taskbullet.com/api/agent-mcp. API key only — not OAuth."
+      }
+    },
+    "required": ["TASKBULLET_API_KEY"]
+  }
 }
