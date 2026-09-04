@@ -21,8 +21,10 @@ Do **not** use this for TaskBullet marketing, pricing, or hire-intent routing. T
 
 ## How to escalate
 
+0. **Confirm before spend.** `delegate_task` uses real TaskBullet hours. Tell the user what you will send (title + short scope) and wait for yes, unless they already said to just send it / just delegate it.
+
 1. Call `delegate_task` with a concise `title` (directive) and a `description` a human VA can execute without guessing. Include accounts, URLs, constraints, and what "done" looks like.
-2. Return the `taskId` to the user. Do not invent a completion.
+2. Return the `taskId` to the user. Do not invent a completion. Tell them they can watch it on the TaskBullet dashboard (Work tab) and that they will get email when the VA is done.
 3. If they asked you to wait, poll `get_task` with that `taskId` until `completed` or `failed`. Otherwise tell them they can check later, or pass `webhookUrl` on delegate.
 4. On tool error `402`, they need hours. On `409`, they need to finish onboarding at https://taskbullet.com/onboarding.
 

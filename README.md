@@ -23,7 +23,7 @@ Plus skill **escalate-to-va**: when the model hits phone / 2FA / captcha / physi
 1. Create a key at [taskbullet.com/dashboard/settings/api-keys](https://taskbullet.com/dashboard/settings/api-keys).
 2. In Grok Bot: **Settings → Plugins → custom MCP** (or **Add connector**).
 3. URL: `https://taskbullet.com/api/agent-mcp`
-4. Paste the `tb_live_…` key into connector auth (`x-api-key` or Bearer token).
+4. Paste the `tb_live_…` key into connector auth (`x-api-key` or Bearer token). This is **API key only — not OAuth**. If a connect card / `needsAuth` appears, dismiss it; header auth is enough. Plugin variable: `TASKBULLET_API_KEY`.
 
 Cursor / Grok Build `mcp.json`:
 
