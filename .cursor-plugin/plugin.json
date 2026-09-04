@@ -1,0 +1,32 @@
+{
+  "name": "taskbullet-agent",
+  "version": "1.0.0",
+  "description": "Escalate work your agent cannot finish to a TaskBullet human VA over hosted MCP (delegate_task, list_tasks, get_task).",
+  "author": {
+    "name": "TaskBullet"
+  },
+  "homepage": "https://taskbullet.com/docs/agent-api",
+  "repository": "https://github.com/GriffMurder/taskbullet-agent-plugin",
+  "license": "MIT",
+  "keywords": [
+    "taskbullet",
+    "mcp",
+    "virtual-assistant",
+    "hitl",
+    "human-in-the-loop",
+    "grok"
+  ],
+  "logo": "assets/logo.svg",
+  "category": "productivity",
+  "variables": {
+    "type": "object",
+    "properties": {
+      "TASKBULLET_API_KEY": {
+        "type": "string",
+        "title": "TaskBullet API key",
+        "description": "tb_live_ key from https://taskbullet.com/dashboard/settings/api-keys. Sent as x-api-key to https://taskbullet.com/api/agent-mcp."
+      }
+    },
+    "required": ["TASKBULLET_API_KEY"]
+  }
+}

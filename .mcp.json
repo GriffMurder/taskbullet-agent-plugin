@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "taskbullet-agent": {
+      "url": "https://taskbullet.com/api/agent-mcp",
+      "headers": {
+        "x-api-key": "${TASKBULLET_API_KEY}"
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "taskbullet-agent",
+  "description": "Escalate work your agent cannot finish to a TaskBullet human virtual assistant over hosted MCP.",
+  "version": "1.0.0",
+  "author": {
+    "name": "TaskBullet"
+  },
+  "homepage": "https://taskbullet.com/docs/agent-api",
+  "license": "MIT"
+}
