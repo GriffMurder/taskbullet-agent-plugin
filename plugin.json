@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "taskbullet-agent",
-  "description": "Escalate work your agent cannot finish to a TaskBullet human virtual assistant over hosted MCP (get_balance, delegate_task, list_tasks, get_task).",
-  "version": "1.0.1",
+  "description": "Escalate unfinished agent work to a TaskBullet human VA, and place US/Canada phone calls, over hosted MCP (get_balance, delegate_task, list_tasks, get_task, confirm_task, cancel_task, reopen_task, place_call, validate_call, get_call, get_call_events, update_call, cancel_call, get_transcript).",
+  "version": "1.1.0",
   "author": {
     "name": "TaskBullet"
   },

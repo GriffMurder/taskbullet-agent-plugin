@@ -1,11 +1,11 @@
 {
   "name": "taskbullet-agent",
-  "version": "1.0.1",
-  "description": "Escalate work your agent cannot finish to a TaskBullet human VA over hosted MCP (get_balance, delegate_task, list_tasks, get_task).",
+  "version": "1.1.0",
+  "description": "Escalate unfinished agent work to a TaskBullet human VA, and place US/Canada phone calls, over hosted MCP (get_balance, delegate_task, list_tasks, get_task, confirm_task, cancel_task, reopen_task, place_call, validate_call, get_call, get_call_events, update_call, cancel_call, get_transcript).",
   "homepage": "https://taskbullet.com/docs/agent-api",
   "logo": "assets/logo.png",
   "license": "MIT",
-  "keywords": ["taskbullet", "virtual assistant", "hitl", "delegate_task", "get_balance"],
+  "keywords": ["taskbullet", "virtual assistant", "hitl", "delegate_task", "get_balance", "place_call"],
   "variables": {
     "type": "object",
     "properties": {
