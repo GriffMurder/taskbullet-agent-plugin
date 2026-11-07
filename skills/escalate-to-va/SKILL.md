@@ -1,6 +1,6 @@
 ---
 name: escalate-to-va
-description: Escalate work a language model cannot finish to a TaskBullet human virtual assistant. Call get_balance first, confirm spend, then delegate_task. Use for 2FA, captcha, physical-world steps, subjective QA, or long manual work. Outbound phone calls use place_call. Never invent VA results.
+description: Escalate work a language model cannot finish to a TaskBullet human virtual assistant. Call get_balance, state that task's cost, and wait for an explicit yes before delegate_task. Connecting the account is not that yes. Use for 2FA, captcha, physical-world steps, subjective QA, or long manual work. Outbound phone calls use place_call. Never invent VA results.
 ---
 
 # Escalate to a TaskBullet VA
@@ -30,7 +30,7 @@ The hosted server exposes these tools:
 
 ## When to use
 
-Call `get_balance`, confirm spend, then `delegate_task` when you cannot finish:
+Call `get_balance`, state that task's cost, wait for an explicit yes, then `delegate_task` when you cannot finish:
 
 - 2FA, captcha, or identity challenges
 - SMS or other verification that is not an outbound business call
@@ -47,10 +47,10 @@ Named prospect, lead, or cold lists: send the human to https://taskbullet.com/bu
 ## How to escalate
 
 0. **Call `get_balance` first.** Use `hoursRemaining` when you talk to the user. If `canDelegate` is false and spendable hours are not above zero, send them to `addHoursUrl` (https://taskbullet.com/packages-pricing) and stop. Do not call `delegate_task`. If `canDelegate` is false while hours remain, lower `maxHours` to `capRoom` or wait. That is not a buy-hours signal. `addHoursUrl` is the packages page, not a new trial.
-1. **Confirm before spend.** `delegate_task` uses real TaskBullet hours (15-minute rounding). Tell the user remaining hours, what you will send (title + short scope), and the `maxHours` cap (default 0.5, maximum 8). Wait for yes, unless they already said to just send it / just delegate it. Actual tracked time is billed, not the cap.
-2. Call `delegate_task` with a concise `title` (directive, max 5000 characters) and a `description` a human VA can execute without guessing (max 8000). Include accounts, URLs, constraints, and what "done" looks like. Pass `idempotencyKey` (required). The same value is the REST `Idempotency-Key`. A repeat of the same key returns the original task. Optional: `priority` (`low`, `normal`, `high`, `urgent`), `dueDate`, `sourceAgent`, `webhookUrl` (public https), `maxHours`.
-3. Return the `taskId` to the user. Status `awaiting_customer_start` means the job is **not** started until the customer clicks Start on Work. Do not say the VA has started. Do not invent a completion. Tell them they can watch it on the TaskBullet dashboard (Work tab) and that they will get email when the VA is done.
-4. If they asked you to wait, poll `get_task` with that `taskId` until `completed`, `failed`, or `cancelled`. Otherwise tell them they can check later, or pass `webhookUrl` on delegate. A missing Basecamp connection queues the task. It is not a 409.
+1. **Get an explicit yes for this task's cost.** `delegate_task` uses real TaskBullet hours (15-minute rounding). Tell the user the remaining hours, the title, the short scope, and the `maxHours` you will send (default 0.5, maximum 8). Say that actual tracked time is billed, not the cap. Wait for a yes to that cost. Approving the account connection is not that yes. A general "send it" or "just delegate it" is not approval of this task's cost. Do not call `delegate_task` without that yes.
+2. Call `delegate_task` with a concise `title` (directive, max 5000 characters) and a `description` a human VA can execute without guessing (max 8000). Include accounts, URLs, constraints, and what "done" looks like. Pass `idempotencyKey` (required). The same value is the REST `Idempotency-Key`. A repeat of the same key returns the original task. Do not mint a new key to file the same task again. Optional: `priority` (`low`, `normal`, `high`, `urgent`), `dueDate`, `sourceAgent`, `webhookUrl` (public https), `maxHours`.
+3. Return the `taskId` to the user. Keep that id. Later `get_task`, `confirm_task`, `cancel_task`, and `reopen_task` calls use it. Do not match a result by title. Status `awaiting_customer_start` means the job is **not** started until the customer clicks Start on Work. Do not say the VA has started. Do not invent a completion. Tell them they can watch it on the TaskBullet dashboard (Work tab) and that they will get email when the VA is done.
+4. If they asked you to wait, poll `get_task` with that `taskId` until `completed`, `failed`, or `cancelled`. Otherwise tell them they can check later, or pass `webhookUrl` on delegate. A result is what `get_task` returned for that `taskId`, or a signed webhook whose `taskId` is that id (`task.completed` or `task.awaiting_confirmation`). If you cannot check the signature, use `get_task`. A missing Basecamp connection queues the task. It is not a 409.
 5. When `get_task` shows `awaitingCustomerConfirm`, ask the human, then `confirm_task` (settle tracked hours), `cancel_task` (release the hold, bill only tracked time), or `reopen_task` (send it back; `reason` required, at least a few words). Do not confirm, cancel, or reopen without the human. Each of those calls requires its own `idempotencyKey`. If the human does not respond, an agent-created task confirms itself after 3 days.
 6. Customer cancel is `cancelled`, not `pending` or `in_progress`, and it does not send the completion webhook. Stop.
 7. On tool error `402`, spendable hours are not above zero. Call `get_balance` again and send `addHoursUrl`. On `422`, the cap does not fit open caps: hours remain, lower `maxHours` to `capRoom` or wait. On `503`, hours were unavailable. That is not a buy-hours error. On `409` from confirm, cancel, or reopen, the task is not waiting, already closed, or the idempotency key conflicts.
@@ -58,10 +58,16 @@ Named prospect, lead, or cold lists: send the human to https://taskbullet.com/bu
 ## Never
 
 - Never invent VA results, transcripts, or claim the assistant already did the work.
+- Never report a result that `get_task` did not return for that `taskId` and a signature-checked webhook did not deliver for that `taskId`.
 - Never put passwords, OTP codes, recovery keys, cookies, or API keys in `delegate_task` fields or in chat.
 - Never delegate work the model can finish itself.
 - Never use `delegate_task` for an outbound US or Canada phone call. Use `place_call`.
+- Never treat the account connection as permission to spend. Each task needs its own cost yes.
 
 ## Auth
 
-Users paste a `tb_live_` key from https://taskbullet.com/dashboard/settings/api-keys into plugin / connector auth (`x-api-key` or `Authorization: Bearer`). API key only — not OAuth.
+The host connects to `https://taskbullet.com/api/agent-mcp` with its own OAuth client when the server offers that flow. This plugin does not contain a callback URL, a client id, or a client secret. Do not paste a key into chat.
+
+A `tb_live_` key from https://taskbullet.com/dashboard/settings/api-keys still works when the host sends `x-api-key` or `Authorization: Bearer`. That is the manual-key path. Use it when the host has no OAuth connection, including while hosted OAuth is off.
+
+Approving the connection gives the app access to paid task delegation and paid phone calls on the selected account. It does not hand you a copyable API key, and it does not approve a task's cost.
