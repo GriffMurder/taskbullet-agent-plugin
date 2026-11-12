@@ -1,18 +1,30 @@
 {
   "name": "taskbullet-agent",
-  "version": "1.1.0",
-  "description": "Escalate unfinished agent work to a TaskBullet human VA, and place US/Canada phone calls, over hosted MCP (get_balance, delegate_task, list_tasks, get_task, confirm_task, cancel_task, reopen_task, place_call, validate_call, get_call, get_call_events, update_call, cancel_call, get_transcript).",
+  "version": "1.2.0",
+  "description": "Escalate unfinished agent work to a TaskBullet human virtual assistant, place US and Canada phone calls, and request a human-sent email, through TaskBullet's hosted MCP server. The user supplies their own TaskBullet API key. Nothing runs locally.",
+  "author": {
+    "name": "TaskBullet",
+    "url": "https://taskbullet.com"
+  },
   "homepage": "https://taskbullet.com/docs/agent-api",
-  "logo": "assets/logo.png",
+  "repository": "https://github.com/taskbullet/taskbullet-agent-plugin",
   "license": "MIT",
-  "keywords": ["taskbullet", "virtual assistant", "hitl", "delegate_task", "get_balance", "place_call"],
+  "keywords": [
+    "taskbullet",
+    "taskbullet agent",
+    "taskbullet va",
+    "taskbullet virtual assistant",
+    "taskbullet phone call",
+    "taskbullet mcp"
+  ],
+  "logo": "assets/logo.png",
   "variables": {
     "type": "object",
     "properties": {
       "TASKBULLET_API_KEY": {
         "type": "string",
         "title": "TaskBullet API key",
-        "description": "tb_live_ key from https://taskbullet.com/dashboard/settings/api-keys. Sent as x-api-key to https://taskbullet.com/api/agent-mcp. API key only — not OAuth."
+        "description": "The user's own tb_live_ key from https://taskbullet.com/dashboard/settings/api-keys. Grok sends it as x-api-key to https://taskbullet.com/api/agent-mcp. Set it in plugin configuration. Do not paste it into chat. The server does not advertise OAuth."
       }
     },
     "required": ["TASKBULLET_API_KEY"]
